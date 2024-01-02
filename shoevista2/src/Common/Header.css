@@ -1,0 +1,121 @@
+.nav-left{
+    width: 25rem;
+    justify-content: space-around;
+    }
+    
+    .nav-left .text{
+        color: green;
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+    
+    
+    
+    .nav-left .text:hover {
+        color: #8328a7; 
+        transform: scale(1.1);
+      cursor: pointer; 
+      }
+      .nav-left svg {
+        
+        color: #111111; 
+        
+      }
+     
+      .nav-left svg:hover {
+        transform: scale(1.1);
+        color: #ce1111; 
+        cursor: pointer; 
+      }
+      
+     
+      .nav-left .text .nav-left svg {
+        transition: color 0.3s, transform 0.3s;
+      }
+      
+      .navbar {
+        background-color: #eff3f6; 
+        transition: background-color 0.3s ease;
+        
+      }
+      
+      .navbar:hover {
+        background-color: #dbdbdf;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .navbar-brand:hover {
+        color: #3498db;
+      }
+      
+      .nav-link:hover {
+        color: #3498db; 
+      }
+    
+    
+    
+    .company-logo {
+        display: flex;
+        align-items: center;
+      }
+      
+      .company-logo span {
+        margin-right: 10px; 
+      }
+      
+     
+      .logo-container {
+        display: flex;
+        align-items: center;
+      }
+      
+      .logo-container span {
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: cursive;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .spin {
+        animation: spin 1s forwards;
+      }
+      
+    
+      
+    
+    .company-logo {
+        display: flex;
+        align-items: center;
+      }
+      
+      .company-logo span {
+        margin-right: 10px; 
+      }
+      
+      @keyframes vibrate {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .navbar-toggler-icon
+    {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%283, 152, 158, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='4' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+      .company-logo {
+        cursor: pointer;
+        animation: vibrate 0.5s ease-in-out; 
+      }
+
+      
