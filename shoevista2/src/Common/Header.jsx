@@ -11,6 +11,7 @@ import "./Header.css"
 
 const Header = () => {
   const navigate = useNavigate();
+  const jwtToken = localStorage.getItem("jwt")
   const { login, setLogin,loginuser} = useContext(Data);
 
   const logout = () => {

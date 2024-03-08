@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const user = useRef(null);
-  const pass = useRef(null);
+  const user = useRef();
+  const pass = useRef();
 
   const sub = () => {
     const username = user.current.value;

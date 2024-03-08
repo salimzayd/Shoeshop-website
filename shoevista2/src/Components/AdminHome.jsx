@@ -1,13 +1,43 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Card from 'react-bootstrap/Card';
-import { Data } from '../App';
+import { Axios,Data } from '../App';
 import { useNavigate } from 'react-router-dom';
 
 
 const AdminHome = () => {
   const{userData,vieworder} =useContext(Data);
+  const [user,setuser] = useState([])
+  const [order,setOrder] = useState([])
 const navigate=useNavigate();
+
+
+useEffect(() =>{
+
+  const fetchProducts = async ()=>{
+    const response = await Axios.get("api/admin/users")
+    if(response.status === 200){
+      setuser(response.data.data)
+    }
+  }
+  fetchProducts()
+},[])
+
+useEffect(() =>{
+  const fetchOrders = async () =>{
+    try{
+      const response = await Axios.get(`api/admin/orders`)
+      if(response.status === 200){
+        setOrder(response.data.products)
+      }
+    } catch (error){
+
+    }
+  }
+  fetchOrders()
+},[])
+
+
   return (
     <div className='d-flex bg-secondary w-100'>
   <div>
