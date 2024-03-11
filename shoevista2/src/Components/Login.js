@@ -1,73 +1,94 @@
-import React, { useContext, useRef } from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { Data } from '../App';
+import React, { useContext, useRef, useState } from 'react';
+import { Button, Container, Row, Col, FormGroup, FormControl } from 'react-bootstrap';
+import { Form, Link, useNavigate } from 'react-router-dom';
+// import { Data } from '../App';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { Axios } from '../App';
 
 const Login = () => {
-  const { userData, setLogin, setloginuser } = useContext(Data);
+  const  [LoginUser, setLoginUser] = useState([]);
   const navigate = useNavigate();
-  const userRef = useRef(null);
-  const passRef = useRef(null);
 
   
-  const logins = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const username = userRef.current.value;
-    const password = passRef.current.value;
+    const email = e.target.elements.email.value.trim()
+    const password = e.target.elements.password.value.trim()
+    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL
 
-    const users1 = userData.find((item) => item.userName === username );
-    const users2 = userData.find((item) =>  item.password === password);
-
-    if (users1 && users2) {
-      setLogin(true);
-      toast.success('Thank you For Login');
-      navigate('/');
-      setloginuser(users1)
-      setloginuser(users1)
-      
-    } else {
-      toast.error('User not found');
-      
+    if(email === '' || password === ''){
+      toast.error('enter both username and password');
+      return;
     }
+    let url = 'http://localhost:3004/api/admin/login';
+
+    if(email === adminEmail){
+      url = 'http://localhost:3004/api/admin/login';
+    }
+
+    try{
+      const payload = {email,password};
+      const response = await Axios.post(url,payload);
+
+
+      if(response.status === 200){
+        if(email === adminEmail){
+          localStorage.setItem('jwt', response.data.Data.token);
+          localStorage.setItem('userName',response.data.Data.user.name);
+          localStorage.setItem('userId',response.data.Data.user._id);
+          localStorage.setItem('email',response.data.Data.user.email);
+        }else{
+          localStorage.setItem('jwt',response.data.Data.token)
+          localStorage.setItem('role','role')
+        }
+
+        if(email === adminEmail){
+          navigate('/admin');
+          toast.success('Login successfull')
+        }
+      }else{
+        toast.error(response.message);
+      }
+    }catch(error){
+      console.log(error);
+      toast.error('invalid username or password')
+    }
+
+
+  
   };
 
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="shadow p-3 mb-5 bg-white rounded m-3" style={{ width: '25rem' }}>
-        <Row className="mb-3">
-          <Col>
-            <input className="form-control" placeholder="Username" ref={userRef} />
-          </Col>
-        </Row>
+      <div className="shadow p-4 mb-5 bg-white rounded m-3" style={{ maxwidth: '500px',width:'100%' }}>
+        <Form onSubmit={handleLogin}>
+          <FormGroup className='mb-3'>
+            <FormControl type='text' placeholder='email address' name='email' required />
 
-        <Row className="mb-3">
-          <Col>
-            <input type="password" className="form-control" placeholder="Password" ref={passRef} />
-          </Col>
-        </Row>
+          </FormGroup>
 
-        <Row className="mb-3">
-          <Col>
-            <h6 className="text-primary">Forgot password</h6>
-          </Col>
-        </Row>
+          <FormGroup className='mb-3'>
+            <FormControl type='password' placeholder='password' name='password' required/>
 
-        <Row className="mb-3">
-          <Col>
-            <Button variant="success" onClick={logins} block>
-              Login
-            </Button>
-          </Col>
-        </Row>
+          </FormGroup>
+
+          <Row className='mb-3'>
+            <col>
+            <Link to='/forget-password' className='text-primary'>Forgot password</Link>
+            </col>
+          </Row>
+
+          <Button variant='success' type='submit' block>Login</Button>
+        </Form>
 
         <Row>
-          <Col>
-            <h6 className="mt-3">
-              Don't have an account? <Link to="/register">Signup</Link>
-            </h6>
-          </Col>
+          <col className='mt-3'>
+          <h6>
+            Don't have an account ? <Link to='/register'>Signup</Link>
+          </h6>
+          </col>
         </Row>
       </div>
     </Container>

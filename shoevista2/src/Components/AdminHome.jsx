@@ -55,7 +55,7 @@ useEffect(() =>{
           <Card.Body>
             <Card.Title> USERS </Card.Title>
             <Card.Text>
-       <h1>  {userData.length} </h1>
+       <h1>  {user.length} </h1>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -71,7 +71,7 @@ useEffect(() =>{
           <Card.Body>
             <Card.Title> ORDERS </Card.Title>
             <Card.Text>
-       <h1>     {vieworder.length} </h1> 
+       <h1>     {order.length} </h1> 
             </Card.Text>
           </Card.Body>
         </Card>
